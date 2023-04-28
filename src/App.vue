@@ -1,10 +1,25 @@
 <template>
   <nav>
-    <router-link to="/">Home</router-link> |
+    <router-link to="/">Home</router-link>
+    |
     <router-link to="/about">About</router-link>
+    |
+    <router-link to="/micro-app">MircoApp</router-link>
   </nav>
-  <router-view/>
+  <router-view v-slot="{ Component }">
+    <keep-alive ref="keep">
+      <component :is="Component" :key="$route.name"></component>
+    </keep-alive>
+  </router-view>
+  <!-- <router-view :key="$route.fullPath" /> -->
 </template>
+<script lang="ts" setup>
+import { ref, onMounted } from 'vue'
+const keep = ref()
+onMounted(() => {
+  console.log('keep', keep)
+})
+</script>
 
 <style lang="scss">
 #app {
